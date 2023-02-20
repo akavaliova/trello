@@ -11,8 +11,47 @@
     <title>Trello-clone</title>
 </head>
 <body>
+    <div class="trello">
+        <div class="container">
+            <div class="trello__wrap">
+                <h2 class="trello__title">Trello</h2>
+                <div class="trello__todo-block">
+                    <ul class="trello__todo-active trello__todo-active--wrap">
+                        <li class="trello__todo-active trello__todo-active--item">Todo:</li>
+                        <li class="trello__todo-active trello__todo-active--case">
+                            <div class="trello__todo-active trello__todo-active--upperSection">
+                                <p class="trello__todo-active trello__todo-active--title">Title</p>
+                                <button class="trello__todo-active trello__todo-active--editBtn">Edit</button>
+                                <button class="trello__todo-active trello__todo-active--delBtn">Delete</button>
+                            </div>
+                            <div class="trello__todo-active trello__todo-active--midSection">
+                                <p class="trello__todo-active trello__todo-active--description">Description</p>
+                                <button class="trello__todo-active trello__todo-active--transferBtn"><svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.5 1.5L8.5 9L1.5 16.5" stroke="#20201C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    </button>
+                            </div>
+                            <div class="trello__todo-active trello__todo-active--downSection">
+                                <p class="trello__todo-active trello__todo-active--user">User</p>
+                                <p class="trello__todo-active trello__todo-active--time">Time</p>
+                            </div>
+                        </li>
+                        <li class="trello__todo-active trello__todo-active--addTodoItem">
+                            <button class="trello__todo-active trello__todo-active--addTodoBtn">Add  todo</button></li>
+                    </ul>
+                    <ul class="trello__todo-inprogress trello__todo-inprogress--wrap">
+                        <li class="trello__todo-inprogress trello__todo-inprogress--item">In progress:</li>
+                    </ul>
+                    <ul class="trello__todo-done trello__todo-done--wrap">
+                        <li class="trello__todo-done trello__todo-done--item">Done</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> 
 
     <script src="scripts/index.js" type="module"></script>
 </body>
 </html>
+
 
