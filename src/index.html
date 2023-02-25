@@ -16,7 +16,7 @@
             <div class="trello__wrap">
                 <div class="trello__title">
                     <h2 class="trello__title-name">Trello</h2>
-                    <button class="trello__title-clock">12:30</button>
+                    <p id="trello__title-clock">12:30</button>
                 </div>
                 <div class="trello__todo-block">
                     <ul class="trello__todo-active trello__todo-active--wrap">
@@ -27,12 +27,12 @@
                         <li class="trello__todo-active trello__todo-active--case">
                             <div class="trello__todo-active trello__todo-active--upperSection">
                                 <p class="trello__todo-active trello__todo-active--title">Title</p>
-                                <button class="trello__todo-active trello__todo-active--editBtn">Edit</button>
+                                <button id="trello__todo-active--editBtn">Edit</button>
                                 <button class="trello__todo-active trello__todo-active--delBtn">Delete</button>
                             </div>
                             <div class="trello__todo-active trello__todo-active--midSection">
                                 <p class="trello__todo-active trello__todo-active--description">Description</p>
-                                <button class="trello__todo-active trello__todo-active--transferBtn"><svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <button id="trello__todo-active--transferBtn"><svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1.5 1.5L8.5 9L1.5 16.5" stroke="#20201C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                     </button>
@@ -42,10 +42,10 @@
                                 <p class="trello__todo-active trello__todo-active--time">Time</p>
                             </div>
                         </li>
-                        <li class="trello__todo-active trello__todo-active--case">
+                        <!-- <li class="trello__todo-active trello__todo-active--case">
                             <div class="trello__todo-active trello__todo-active--upperSection">
                                 <p class="trello__todo-active trello__todo-active--title">Title</p>
-                                <button class="trello__todo-active trello__todo-active--editBtn">Edit</button>
+                                <button id="trello__todo-active--editBtn">Edit</button>
                                 <button class="trello__todo-active trello__todo-active--delBtn">Delete</button>
                             </div>
                             <div class="trello__todo-active trello__todo-active--midSection">
@@ -59,9 +59,9 @@
                                 <p class="trello__todo-active trello__todo-active--user">User</p>
                                 <p class="trello__todo-active trello__todo-active--time">Time</p>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="trello__todo-active trello__todo-active--addTodoItem">
-                            <button class="trello__todo-active trello__todo-active--addTodoBtn">Add  todo</button>
+                            <button id="trello__todo-active--addTodoBtn">Add  todo</button>
                         </li>
                     </ul>
                     <ul class="trello__todo-inprogress trello__todo-inprogress--wrap">
@@ -108,23 +108,14 @@
         </div>
         <!-- the end of trello wrap -->
     </div> 
-
-     <!-- Modal windows -->
-     <div id="overlay">
-        <!-- a wrap for the first modal window -->
-        <div id="modal-window">
+    
+    <!-- Modal windows --> 
+     <!-- a wrap for the first modal window -->
+    <div id="overlay"> -->
+         <div id="modal-window">
             <p class="modal-window__title">Title</p>
             <input placeholder="Description" id="modal-window__text" type="text">
             <div class="modal-window__buttons">
-                <!-- выпадающий список не работает -->
-                <!-- <div class="modal-window__dropdown">
-                    <button onclick="dropdownFunction()" id="modal-window__dropdownBtn"> Select User</button>
-                    <div id="modal-window__dropdownWrap" class="modal-window__dropdownContent">
-                      <a href="#">User1</a>
-                      <a href="#">User2</a>
-                      <a href="#">User3</a>
-                    </div>
-                </div> -->
                 <button id="modal-window__dropdownBtn"> Select User <svg width="19" height="11" viewBox="0 0 19 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17 2L9.5 9L2 2" stroke="#20201C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -132,13 +123,19 @@
                 <button id="modal-window__cancelBtn">Cancel</button>
                 <button id="modal-window__confirmBtn">Confirm</button>
             </div>
-        </div>
-        <!-- a wrap for the warning modal window -->
-        <div class="modal-warning">
-
+        </div> -->
+    </div> 
+<!-- Warning modal window -->
+    <div id="overlayWarning">
+        <div id="modal-warning">
+            <p class="modal-warning__text">Warning!</p>
+            <div class="modal-warning__buttons">
+                <button id="modal-warning__cancelBtn">Cancel</button>
+                <button id="modal-warning__confirmBtn">Confirm</button>
+            </div>
         </div>
     </div>
- 
+
     <script src="scripts/index.js" type="module"></script>
 </body>
 </html>
