@@ -100,8 +100,8 @@
     line-height: 33px;
     color: black;
 }
-
-.trello__todo-active--case{
+/* Добавила id вместо класса */
+#trello__todo-active--case{
     list-style-type: none;
     background-color: #6edcb3;
     border: 2px solid #1b6246;
