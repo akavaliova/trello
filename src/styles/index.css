@@ -62,7 +62,7 @@
     column-gap: 30px;
 }
 
-.trello__todo-active--wrap{
+#trello__todo-active--wrap{
     width: 100%;
     max-width: 365px;
     border: 2px solid gray;
@@ -114,7 +114,10 @@
     display: flex;
     column-gap: 5px;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 10px; 
+}
+
+.trello__todo-active--title{
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 22px;
@@ -190,6 +193,12 @@
     width: 100%;
     max-width: 50px;
     padding: 7px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    color: black;
 }
 #trello__todo-active--transferBtn:hover{
     box-shadow: 2px 2px 10px #949191;
@@ -203,7 +212,7 @@
     margin-right: 5px;
 }
 
-.trello__todo-active--addTodoItem{
+#trello__todo-active--addTodoItem{
     list-style-type: none;
     width: 100%;
     max-width: 370px

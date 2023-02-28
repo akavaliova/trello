@@ -14,35 +14,74 @@ const descriptionInput = document.getElementById("modal-window__text");
 
 
 function init() {
-    const ulWrap = document.getElementsByClassName("trello__todo-active trello__todo-active--wrap");
-    const activeCase = createElementWithID("li", "trello__todo-active--case");
-    const activeUpperSection = createElementWithClassName("div", "trello__todo-active trello__todo-active--upperSection");
-    const activeTitle = createElementWithClassName("p", "trello__todo-active trello__todo-active--title");
-    const activeEditBtn = createElementWithID("button", "trello__todo-active--editBtn");
-    const activeDelBtn = createElementWithClassName("button", "trello__todo-active trello__todo-active--delBtn");
+    render();
+}
 
-    const activeMidSection = createElementWithClassName("div", "trello__todo-active trello__todo-active--midSection");
-    const activeDescription = createElementWithClassName("p", "trello__todo-active trello__todo-active--description");
-    const activeTransferBtn = createElementWithID("button", "trello__todo-active--transferBtn");
+function reset() {
+    const ul = document.getElementById('trello__todo-active--wrap');
+}
 
-    const activeDownSection = createElementWithClassName("div", "trello__todo-active trello__todo-active--downSection");
-    const activeUser = createElementWithClassName("p", "trello__todo-active trello__todo-active--user");
-    const activeTime = createElementWithClassName("p", "trello__todo-active trello__todo-active--time");
-  
-    ulWrap.append(activeCase);
-    activeCase.append(activeUpperSection);
-    activeUpperSection.append(activeTitle);
-    activeTitle.append(activeEditBtn);
-    activeEditBtn.append(activeDelBtn);
-    activeDelBtn.append(activeMidSection);
-    activeMidSection.append(activeDescription);
-    activeDescription.append(activeTransferBtn);
-    activeTransferBtn.append(activeDownSection);
-    activeDownSection.append(activeUser);
-    activeUser.append(activeTime);
+  function render() {
+    reset();
+    const all = getTodos();
+    const todos = all.filter(t => {
+        return t.status === statusTODO;
+    });
+
+    todos.forEach(todo => {     
+        drawTodo(todo);
+    });
   }
 
+  function drawTodo(todo) {
+    const addTodo = document.getElementById("trello__todo-active--addTodoItem");
+    const activeCase = createElementWithID("li", "trello__todo-active--case");
+    const activeUpperSection = createElementWithClassName("div", "trello__todo-active--upperSection");
+    const activeTitle = createElementWithClassName("p", "trello__todo-active--title");
+    const activeEditBtn = createElementWithID("button", "trello__todo-active--editBtn");
+    const activeDelBtn = createElementWithClassName("button", "trello__todo-active--delBtn");
+
+    const activeMidSection = createElementWithClassName("div", "trello__todo-active--midSection");
+    const activeDescription = createElementWithClassName("p", "trello__todo-active--description");
+    const activeTransferBtn = createElementWithID("button", "trello__todo-active--transferBtn");
+
+    const activeDownSection = createElementWithClassName("div", "trello__todo-active--downSection");
+    const activeUser = createElementWithClassName("p", "trello__todo-active--user");
+    const activeTime = createElementWithClassName("p", "trello__todo-active--time");
+
+    addTodo.prepend(activeCase);
+    activeCase.append(activeUpperSection);
+    activeUpperSection.append(activeTitle);
+    activeUpperSection.append(activeEditBtn);
+    activeEditBtn.append("Edit");
+    activeUpperSection.append(activeDelBtn);
+    activeDelBtn.append("Delete");
+    activeCase.append(activeMidSection);
+    activeMidSection.append(activeDescription);
+    activeDescription.append("Description");
+    activeDescription.innerText = todo.description;
+    activeMidSection.append(activeTransferBtn);
+    activeTransferBtn.append(">")
+    activeCase.append(activeDownSection);
+    activeDownSection.append(activeUser);
+    activeUser.append("User");
+    activeDownSection.append(activeTime);
+    activeTime.append("Time");
+    activeTime.innerText = todo.date;
+  }
+
+  function createElementWithClassName(tag, className) {
+    let element = document.createElement(tag);
+    element.setAttribute("class", className);
+    return element;
+  }
   
+  function createElementWithID(tag, idName) {
+    let idElement = document.createElement(tag);
+    idElement.setAttribute("id", idName);
+    return idElement;
+  }
+
 
 
 function addTodo(title, description) {
@@ -57,7 +96,7 @@ function addTodo(title, description) {
     };
 
     todos.push(todo);
-    localStorage.setItem("todos", JSON.stringify(todos));  
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function getTodos() {
@@ -92,9 +131,10 @@ modalConfirmBtn.addEventListener("click", function () {
     const description = descriptionInput.value;
 
     if (!!description && !!title) {
+        addTodo(title, description);
         overlayWrap.classList.remove("active"); // закрываю модальное окно
         clearInputFields();
-        addTodo(title, description);
+        render();
     } else {
         alert("Please, input the title and the description");
     }
