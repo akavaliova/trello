@@ -19,16 +19,17 @@
                     <p id="trello__title-clock">12:30</button>
                 </div>
                 <div class="trello__todo-block">
-                    <ul id="trello__todo-active--wrap">
-                        <li class="trello__todo-active trello__todo-active--item">
-                            <p class="trello__todo-active trello__todo-active--name">Todo:</p>
-                            <p class="trello__todo-active trello__todo-active--amount">0</p>
-                        </li>
-                        <!-- <li id="trello__todo-active--case">
+                    <div id="trello__todo-active--wrap">
+                        <div class="trello__todo-active--item">
+                            <p class="trello__todo-active--name">Todo:</p>
+                            <p class="trello__todo-active--amount">1</p>
+                        </div>
+                        <ul id="trello__todo-active--caseWrap">
+                            <li id="trello__todo-active--case">
                             <div class="trello__todo-active--upperSection">
                                 <p class="trello__todo-active--title">Title</p>
                                 <button id="trello__todo-active--editBtn">Edit</button>
-                                <button class="trello__todo-active--delBtn">Delete</button>
+                                <button id="trello__todo-active--delBtn">Delete</button>
                             </div>
                             <div class="trello__todo-active--midSection">
                                 <p class="trello__todo-active--description">Description</p>
@@ -41,49 +42,54 @@
                                 <p class="trello__todo-active--user">User</p>
                                 <p class="trello__todo-active--time">Time</p>
                             </div>
-                        </li> -->
-                        <li id="trello__todo-active--addTodoItem">
+                        </li>
+                        </ul>
+                        <div id="trello__todo-active--addTodoItem">
                             <button id="trello__todo-active--addTodoBtn">Add  todo</button>
-                        </li>
-                    </ul>
-                    <ul class="trello__todo-inprogress trello__todo-inprogress--wrap">
-                        <li class="trello__todo-inprogress trello__todo-inprogress--item">
-                            <p class="trello__todo-inprogress trello__todo-inprogress--name">In Progress:</p>
-                            <p class="trello__todo-inprogress trello__todo-inprogress--amount">0</p>
-                        </li>
-                        <!-- <li class="trello__todo-inprogress trello__todo-inprogress--case">
-                            <div class="trello__todo-inprogress trello__todo-inprogress--upperSection">
-                                <p class="trello__todo-inprogress trello__todo-inprogress--title">Title</p>
-                                <button class="trello__todo-inprogress trello__todo-inprogress--backBtn">Back</button>
-                                <button class="trello__todo-inprogress trello__todo-inprogress--completeBtn">Complete</button>
+                        </div>
+                    </div>
+                    <div id="trello__todo-inprogress--wrap">
+                        <div class="trello__todo-inprogress--item">
+                            <p class="trello__todo-inprogress--name">In Progress:</p>
+                            <p class="trello__todo-inprogress--amount">1</p>
+                        </div>
+                        <ul id="trello__todo-inprogress--caseWrap">
+                            <li id="trello__todo-inprogress--case">
+                            <div class="trello__todo-inprogress--upperSection">
+                                <p class="trello__todo-inprogress--title">Title</p>
+                                <button id="trello__todo-inprogress--backBtn">Back</button>
+                                <button id="trello__todo-inprogress--completeBtn">Complete</button>
                             </div>
-                                <p class="trello__todo-inprogress trello__todo-inprogress--description">Description</p>
-                            <div class="trello__todo-inprogress trello__todo-inprogress--downSection">
-                                <p class="trello__todo-inprogress trello__todo-inprogress--user">User</p>
-                                <p class="trello__todo-inprogress trello__todo-inprogress--time">Time</p>
+                                <p class="trello__todo-inprogress--description">Description</p>
+                            <div class="trello__todo-inprogress--downSection">
+                                <p class="trello__todo-inprogress--user">User</p>
+                                <p class="trello__todo-inprogress--time">Time</p>
                             </div>
-                        </li> -->
-                    </ul>
-                    <ul class="trello__todo-done trello__todo-done--wrap">
-                        <li class="trello__todo-done trello__todo-done--item">
-                            <p class="trello__todo-done trello__todo-done--name">Done:</p>
-                            <p class="trello__todo-done trello__todo-done--amount">0</p>
                         </li>
-                        <!-- <li class="trello__todo-done trello__todo-done--case">
-                            <div class="trello__todo-done trello__todo-done--upperSection">
-                                <p class="trello__todo-done trello__todo-done--title">Title</p>
-                                <button class="trello__todo-done trello__todo-done--delBtn">Delete</button>
+                        </ul>                      
+                    </div>
+                    <div id="trello__todo-done--wrap">
+                        <div class="trello__todo-done--item">
+                            <p class="trello__todo-done--name">Done:</p>
+                            <p class="trello__todo-done--amount">1</p>
+                        </div>
+                        <ul id="trello__todo-done--caseWrap">
+                            <li id="trello__todo-done--case">
+                            <div class="trello__todo-done--upperSection">
+                                <p class="trello__todo-done--title">Title</p>
+                                <button id="trello__todo-done--delBtn">Delete</button>
                             </div>
-                                <p class="trello__todo-done trello__todo-done--description">Description</p>
-                            <div class="trello__todo-done trello__todo-done--downSection">
-                                <p class="trello__todo-done trello__todo-done--user">User</p>
-                                <p class="trello__todo-done trello__todo-done--time">Time</p>
+                                <p class="trello__todo-done--description">Description</p>
+                            <div class="trello__todo-done--downSection">
+                                <p class="trello__todo-done--user">User</p>
+                                <p class="trello__todo-done--time">Time</p>
                             </div>
-                        </li> -->
-                        <li class="trello__todo-done trello__todo-done--deleteAll">
-                            <button class="trello__todo-done trello__todo-done--deleteAllBtn">Delete all</button>
                         </li>
-                    </ul>
+                        </ul>
+                        <div id="trello__todo-done--deleteAll">
+                            <button id="trello__todo-done--deleteAllBtn">Delete all</button>
+                        </div>
+                    </div>
                 </div>
                 <!-- the end of trello wrap -->
             </div>
@@ -121,3 +127,4 @@
     <script src="scripts/index.js" type="module"></script>
 </body>
 </html>
+
