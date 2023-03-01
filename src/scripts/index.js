@@ -19,7 +19,8 @@ function init() {
 }
 
 function reset() {
-    const ul = document.getElementById('trello__todo-active--caseWrap');
+    const todoWrap = document.getElementById('trello__todo-active--caseWrap');
+    todoWrap.innerHTML = '';
 }
 
   function render() {
@@ -53,6 +54,7 @@ function reset() {
     todoWrap.append(activeTodoCase);
     activeTodoCase.append(activeUpperSection);
     activeUpperSection.append(activeTitle);
+    activeTitle.innerText = todo.title;
     activeUpperSection.append(activeEditBtn);
     activeEditBtn.append("Edit");
     activeUpperSection.append(activeDelBtn);

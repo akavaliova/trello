@@ -63,6 +63,8 @@
 }
 
 #trello__todo-active--wrap{
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 365px;
     border: 2px solid gray;
@@ -161,7 +163,7 @@
     text-align: center;
     color: black;
     width: 100%;
-    max-width: 280px;
+    max-width: 80px;
 }
 #trello__todo-active--editBtn:hover{
     box-shadow: 2px 2px 10px #949191;
@@ -181,7 +183,7 @@
     text-align: center;
     color: black;
     width: 100%;
-    max-width: 280px;
+    max-width: 80px;
 }
 #trello__todo-active--delBtn:hover{
     box-shadow: 2px 2px 10px #949191;
@@ -217,8 +219,9 @@
 }
 
 #trello__todo-active--addTodoItem{
+    margin-top: auto;
     width: 100%;
-    max-width: 370px
+    max-width: 370px;
 }
 
 #trello__todo-active--addTodoBtn{
@@ -334,7 +337,7 @@
     text-align: center;
     color: black;
     width: 100%;
-    max-width: 280px;
+    max-width: 80px;
 }
 #trello__todo-inprogress--backBtn:hover{
     box-shadow: 2px 2px 10px #949191;
@@ -354,7 +357,7 @@
     text-align: center;
     color: black;
     width: 100%;
-    max-width: 280px;
+    max-width: 90px;
 }
 #trello__todo-inprogress--completeBtn:hover{
     box-shadow: 2px 2px 10px #949191;
