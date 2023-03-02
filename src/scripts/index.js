@@ -165,8 +165,8 @@ warningConfirmBtn.addEventListener("click", function () {
 // Clock
 function updateClock() {
     let now = new Date(); // текущая дата и время
-    let hours = now.getHours(); // часы
-    let minutes = now.getMinutes(); // минуты
+    let hours = now.getHours().toString().padStart(2, '0'); // часы
+    let minutes = now.getMinutes().toString().padStart(2, '0'); // минуты
     let timeString = hours + ':' + minutes; // строка времени в формате "чч:мм"
     document.getElementById('trello__title-clock').textContent = timeString; // обновляем содержимое элемента с id="clock"
   }
