@@ -94,7 +94,7 @@
     color: black;
 }
 
-.trello__todo-active--amount{
+#trello__todo-active--amount{
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
@@ -273,7 +273,7 @@
     color: black;
 }
 
-.trello__todo-inprogress--amount{
+#trello__todo-inprogress--amount{
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
@@ -405,7 +405,7 @@
     color: black;
 }
 
-.trello__todo-done--amount{
+#trello__todo-done--amount{
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;

@@ -21,19 +21,63 @@ function init() {
 function reset() {
     const todoWrap = document.getElementById('trello__todo-active--caseWrap');
     todoWrap.innerHTML = '';
+    
+    const inProgressWrap = document.getElementById('trello__todo-inprogress--caseWrap')
+    inProgressWrap.innerHTML = '';
+
+    const doneWrap = document.getElementById('trello__todo-done--caseWrap')
+    doneWrap.innerHTML = '';
+
 }
 
   function render() {
     reset();
     const all = getTodos();
+    
     const todos = all.filter(t => {
         return t.status === statusTODO;
     });
 
-    todos.forEach(todo => {     
+    const inProgress =  all.filter(t => {
+        return t.status === statusInProgress;
+    });
+
+    const done =  all.filter(t => {
+        return t.status === statusDONE;
+    });
+
+    todos.forEach(todo => { 
         drawTodo(todo);
     });
+    updateTodoCounter(todos);
+
+    inProgress.forEach(todo => { 
+        drawInProgress(todo);
+    });
+    updateInProgressCounter(inProgress);
+
+    done.forEach(todo => { 
+        drawDone(todo);
+    });
+    updateDoneCounter(done);
   }
+
+  function updateTodoCounter(todos) {
+    const activeTodoCounter = document.getElementById("trello__todo-active--amount");
+    activeTodoCounter.innerText = todos.length;
+  }
+
+  function updateInProgressCounter(inProgress){
+    const inProgressCounter = document.getElementById("trello__todo-inprogress--amount");
+    inProgressCounter.innerText = inProgress.length;
+
+  }
+
+  function updateDoneCounter(done){
+    const doneCounter = document.getElementById("trello__todo-done--amount");
+    doneCounter.innerText = done.length;
+  }
+
 
   function drawTodo(todo) {
     const todoWrap = document.getElementById("trello__todo-active--caseWrap");
@@ -59,18 +103,112 @@ function reset() {
     activeEditBtn.append("Edit");
     activeUpperSection.append(activeDelBtn);
     activeDelBtn.append("Delete");
+    activeDelBtn.addEventListener("click", function() {
+        deleteTodoById(todo.id)
+        render();
+    });
     activeTodoCase.append(activeMidSection);
     activeMidSection.append(activeDescription);
     activeDescription.append("Description");
     activeDescription.innerText = todo.description;
     activeMidSection.append(activeTransferBtn);
-    activeTransferBtn.append(">")
+    activeTransferBtn.append(">");
+    activeTransferBtn.addEventListener("click", function() {
+        const inProgressTodo = getTodoByID(todo.id);
+        if (!!inProgressTodo) {
+            inProgressTodo.status = statusInProgress;
+            deleteTodoById(todo.id);
+            const todos = getTodos();
+            todos.push(inProgressTodo);
+            updateTodos(todos);
+            render();
+        }
+    });
     activeTodoCase.append(activeDownSection);
     activeDownSection.append(activeUser);
     activeUser.append("User");
     activeDownSection.append(activeTime);
     activeTime.append("Time");
     activeTime.innerText = todo.date;
+  }
+
+  function drawInProgress(todo) {
+    const inProgressWrap = document.getElementById("trello__todo-inprogress--caseWrap");
+    const inProgressTodoCase = createElementWithID("li", "trello__todo-inprogress--case");
+    const inProgressUpperSection = createElementWithClassName("div", "trello__todo-inprogress--upperSection");
+    const inProgressTitle = createElementWithClassName("p", "trello__todo-inprogress--title");
+    const inProgressBackBtn = createElementWithID("button", "trello__todo-inprogress--backBtn");
+    const inProgressCompleteBtn = createElementWithID("button", "trello__todo-inprogress--completeBtn");
+
+    const inProgressDescription = createElementWithClassName("p", "trello__todo-inprogress--description");
+
+    const inProgressDownSection = createElementWithClassName("div", "trello__todo-inprogress--downSection");
+    const inProgressUser = createElementWithClassName("p", "trello__todo-inprogress--user");
+    const inProgressTime = createElementWithClassName("p", "trello__todo-inprogress--time");
+
+
+    inProgressWrap.append(inProgressTodoCase);
+    inProgressTodoCase.append(inProgressUpperSection);
+    inProgressUpperSection.append(inProgressTitle);
+    inProgressTitle.innerText = todo.title;
+    inProgressUpperSection.append(inProgressBackBtn);
+    inProgressBackBtn.append("Back");
+    inProgressUpperSection.append(inProgressCompleteBtn);
+    inProgressCompleteBtn.append("Complete");
+    inProgressCompleteBtn.addEventListener("click", function() {
+        const completeTODO = getTodoByID(todo.id);
+        if (!!completeTODO) {
+            completeTODO.status = statusDONE;
+            deleteTodoById(todo.id);
+            const todos = getTodos();
+            todos.push(completeTODO);
+            updateTodos(todos);
+            render();
+        }
+    });
+    inProgressTodoCase.append(inProgressDescription);
+    inProgressDescription.append("Description");
+    inProgressDescription.innerText = todo.description;
+    inProgressTodoCase.append(inProgressDownSection);
+    inProgressDownSection.append(inProgressUser);
+    inProgressUser.append("User");
+    inProgressDownSection.append(inProgressTime);
+    inProgressTime.append("Time");
+    inProgressTime.innerText = todo.date;
+  }
+
+  function drawDone(todo) {
+    const doneWrap = document.getElementById("trello__todo-done--caseWrap");
+    const doneCase = createElementWithID("li", "trello__todo-done--case");
+    const doneUpperSection = createElementWithClassName("div", "trello__todo-done--upperSection");
+    const doneTitle = createElementWithClassName("p", "trello__todo-done--title");
+    const doneDelBtn = createElementWithID("button", "trello__todo-done--delBtn");
+
+    const doneDescription = createElementWithClassName("p", "trello__todo-done--description");
+
+    const doneDownSection = createElementWithClassName("div", "trello__todo-done--downSection");
+    const doneUser = createElementWithClassName("p", "trello__todo-done--user");
+    const doneTime = createElementWithClassName("p", "trello__todo-done--time");
+
+    doneWrap.append(doneCase);
+    doneCase.append(doneUpperSection);
+    doneUpperSection.append(doneTitle);
+    doneTitle.innerText = todo.title;
+    doneUpperSection.append(doneDelBtn);
+    doneDelBtn.append("Delete");
+    doneDelBtn.addEventListener("click", function() {
+        deleteTodoById(todo.id)
+        render();
+    });
+    doneCase.append(doneDescription);
+    doneDescription.append("Description");
+    doneDescription.innerText = todo.description;
+    doneCase.append(doneDownSection);
+    doneDownSection.append(doneUser);
+    doneUser.append("User");
+    doneDownSection.append(doneTime);
+    doneTime.append("Time");
+    doneTime.innerText = todo.date;
   }
 
   function createElementWithClassName(tag, className) {
@@ -99,12 +237,27 @@ function addTodo(title, description) {
     };
 
     todos.push(todo);
-    localStorage.setItem("todos", JSON.stringify(todos));
+    updateTodos(todos);
 }
 
 function getTodos() {
     const todos = localStorage.getItem("todos");
     return !!todos ? JSON.parse(todos) : [];
+}
+
+function getTodoByID(id) {
+    return getTodos().find(todo => todo.id === id);
+}
+
+function deleteTodoById(id) {
+    const todos =  getTodos().filter(function(todo) {
+        return todo.id !== id;
+    });
+    updateTodos(todos);
+}
+
+function updateTodos(todos) {
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function generateId() {
