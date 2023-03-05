@@ -154,6 +154,18 @@ function reset() {
     inProgressTitle.innerText = todo.title;
     inProgressUpperSection.append(inProgressBackBtn);
     inProgressBackBtn.append("Back");
+    // BACK BTN!!!!!!!!!!!!!!!!!!
+    inProgressBackBtn.addEventListener("click", function(){
+        const backToTodo = getTodoByID(todo.id);
+        if(!!backToTodo){
+            backToTodo.status = statusTODO;
+            deleteTodoById(todo.id);
+            const todos = getTodos();
+            todos.push(backToTodo);
+            updateTodos(todos);
+            render();
+        }
+    });
     inProgressUpperSection.append(inProgressCompleteBtn);
     inProgressCompleteBtn.append("Complete");
     inProgressCompleteBtn.addEventListener("click", function() {
