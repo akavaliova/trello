@@ -355,6 +355,35 @@ function updateClock() {
   // обновляем время каждую минуту
   setInterval(updateClock, 60000);
 
+
+//   GET USERS!!!!!!!!!!!!!!!!!!!!
+
+// async function getUsers() {
+//     const users = await fetch("https://jsonplaceholder.typicode.com/users").then(res => res.json());
+//     localStorage.setItem("users", JSON.stringify(users));
+//     console.log(users);
+// }
+// getUsers();
+
+// //  Получаем данные пользователей из локального хранилища
+//  const users = JSON.parse(localStorage.getItem("users"));
+// //  Получаем элементы HTML, с которыми будем работать
+//  const selectUserBtn = document.getElementById("modal-window__dropdownBtn");
+//  // Создаем элементы option для каждого пользователя
+// users.forEach(user => {
+//     const optionElement = document.createElement("option");
+//     optionElement.value = user.id;
+//     optionElement.text = user.name;
+//     selectUserBtn.appendChild(optionElement);
+//   });
+//   // Добавляем обработчик события на выбор пользователя в списке
+//   selectUserBtn.addEventListener("change", (event) => {
+//     const selectedUserId = event.target.value;
+//     const selectedUser = users.find(user => user.id === parseInt(selectedUserId));
+//     console.log(selectedUser);
+//   });
+
+
   
   init();
   
