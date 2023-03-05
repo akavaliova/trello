@@ -11,6 +11,7 @@ const modalCancelBtn = document.getElementById("modal-window__cancelBtn");
 const modalConfirmBtn = document.getElementById("modal-window__confirmBtn");
 const modalTitleInput = document.getElementById("modal-window__title");
 const modaldescriptionInput = document.getElementById("modal-window__text");
+const deleteAllBtn = document.getElementById("trello__todo-done--deleteAllBtn");
 
 
 
@@ -255,6 +256,21 @@ function deleteTodoById(id) {
     });
     updateTodos(todos);
 }
+
+// DELETE ALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+function deleteAll(){
+    const all = getTodos();
+    const todos = all.filter(t => {
+        return t.status !== statusDONE;
+    });
+    updateTodos(todos);
+}
+
+deleteAllBtn.addEventListener("click", function () {
+    deleteAll(statusDONE);
+    render();
+});
 
 function updateTodos(todos) {
     localStorage.setItem("todos", JSON.stringify(todos));
