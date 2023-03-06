@@ -140,7 +140,9 @@
     font-size: 22px;
     line-height: 33px;
     color: black;
+    width: 100%;
 }
+
 
 .trello__todo-active--downSection{
     display: flex;
@@ -544,7 +546,8 @@
 }
 
 #modal-window{
-    width: 550px;
+    max-width: 650px;
+    width: 100%;
     height: 300px;
     background: rgba(108, 203, 154, 0.85);
     border-radius: 10px;
@@ -563,7 +566,9 @@
     background-color: #F5F5F5;
     margin-bottom: 20px;
     width: 100%;
-    max-width: 200px;
+    /* max-width: 200px; */
+    box-sizing: border-box;
+    word-wrap: break-word;
 }
 #modal-window__text{
     font-family: 'Open Sans', sans-serif;
@@ -577,6 +582,7 @@
     margin-bottom: 40px;
     width: 100%;
     height: 100px;
+    resize: none;
 }
 
 .modal-window__buttons{
@@ -594,7 +600,7 @@
     text-align: center;
     color: black;
     width: 100%;
-    max-width: 150px;
+    max-width: 250px;
 }
 
 #modal-window__dropdownBtn:hover{

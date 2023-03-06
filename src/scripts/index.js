@@ -12,14 +12,21 @@ const modalConfirmBtn = document.getElementById("modal-window__confirmBtn");
 const modalTitleInput = document.getElementById("modal-window__title");
 const modaldescriptionInput = document.getElementById("modal-window__text");
 const deleteAllBtn = document.getElementById("trello__todo-done--deleteAllBtn");
-
-
+const selectUserBtn = document.getElementById("modal-window__dropdownBtn");
 
 function init() {
+    loadUsers();
     render();
 }
 
+ async function loadUsers() {
+    const users = await fetch("https://jsonplaceholder.typicode.com/users").then(res => res.json());
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
 function reset() {
+    selectUserBtn.innerHTML = '';
+
     const todoWrap = document.getElementById('trello__todo-active--caseWrap');
     todoWrap.innerHTML = '';
     
@@ -28,11 +35,12 @@ function reset() {
 
     const doneWrap = document.getElementById('trello__todo-done--caseWrap')
     doneWrap.innerHTML = '';
-
 }
 
   function render() {
     reset();
+    updateUsersDropdown();
+
     const all = getTodos();
     
     const todos = all.filter(t => {
@@ -61,6 +69,17 @@ function reset() {
         drawDone(todo);
     });
     updateDoneCounter(done);
+  }
+
+  function updateUsersDropdown() {
+    const users = getUsers(); 
+    users.forEach(function(user) {
+        let userName = user.name;
+        let option = document.createElement("option");
+        option.value = userName;
+        option.text = userName;
+        selectUserBtn.appendChild(option);
+    });
   }
 
   function updateTodoCounter(todos) {
@@ -96,10 +115,12 @@ function reset() {
     const activeUser = createElementWithClassName("p", "trello__todo-active--user");
     const activeTime = createElementWithClassName("p", "trello__todo-active--time");
 
+
     todoWrap.append(activeTodoCase);
     activeTodoCase.append(activeUpperSection);
     activeUpperSection.append(activeTitle);
     activeTitle.innerText = todo.title;
+    // activeUser.innerHTML = todo.user;
     activeUpperSection.append(activeEditBtn);
     activeEditBtn.append("Edit");
     activeUpperSection.append(activeDelBtn);
@@ -127,7 +148,7 @@ function reset() {
     });
     activeTodoCase.append(activeDownSection);
     activeDownSection.append(activeUser);
-    activeUser.append("User");
+    activeUser.innerHTML = todo.user;
     activeDownSection.append(activeTime);
     activeTime.append("Time");
     activeTime.innerText = todo.date;
@@ -154,7 +175,6 @@ function reset() {
     inProgressTitle.innerText = todo.title;
     inProgressUpperSection.append(inProgressBackBtn);
     inProgressBackBtn.append("Back");
-    // BACK BTN!!!!!!!!!!!!!!!!!!
     inProgressBackBtn.addEventListener("click", function(){
         const backToTodo = getTodoByID(todo.id);
         if(!!backToTodo){
@@ -184,7 +204,7 @@ function reset() {
     inProgressDescription.innerText = todo.description;
     inProgressTodoCase.append(inProgressDownSection);
     inProgressDownSection.append(inProgressUser);
-    inProgressUser.append("User");
+    inProgressUser.innerHTML = todo.user;
     inProgressDownSection.append(inProgressTime);
     inProgressTime.append("Time");
     inProgressTime.innerText = todo.date;
@@ -218,7 +238,7 @@ function reset() {
     doneDescription.innerText = todo.description;
     doneCase.append(doneDownSection);
     doneDownSection.append(doneUser);
-    doneUser.append("User");
+    doneUser.innerHTML = todo.user;
     doneDownSection.append(doneTime);
     doneTime.append("Time");
     doneTime.innerText = todo.date;
@@ -238,15 +258,16 @@ function reset() {
 
 
 
-function addTodo(title, description) {
+function addTodo(title, description, user) {
     const todos = getTodos();
   
     const todo = {
       title: title,
       description: description,
+      user: user,
       date: getCurentDate(),
       id: generateId(),
-      status: statusTODO,
+      status: statusTODO
     };
 
     todos.push(todo);
@@ -256,6 +277,11 @@ function addTodo(title, description) {
 function getTodos() {
     const todos = localStorage.getItem("todos");
     return !!todos ? JSON.parse(todos) : [];
+}
+
+function getUsers() {
+    const users = localStorage.getItem("users");
+    return !!users ? JSON.parse(users) : [];
 }
 
 function getTodoByID(id) {
@@ -269,9 +295,7 @@ function deleteTodoById(id) {
     updateTodos(todos);
 }
 
-// DELETE ALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-function deleteAll(){
+function deleteAll() {
     const all = getTodos();
     const todos = all.filter(t => {
         return t.status !== statusDONE;
@@ -280,7 +304,7 @@ function deleteAll(){
 }
 
 deleteAllBtn.addEventListener("click", function () {
-    deleteAll(statusDONE);
+    deleteAll();
     render();
 });
 
@@ -313,9 +337,11 @@ modalCancelBtn.addEventListener("click", function () {
 modalConfirmBtn.addEventListener("click", function () {
     const title = modalTitleInput.value;
     const description = modaldescriptionInput.value;
+    const user = selectUserBtn.value;
+
 
     if (!!description && !!title) {
-        addTodo(title, description);
+        addTodo(title, description, user);
         overlayWrap.classList.remove("active"); // закрываю модальное окно
         clearInputFields();
         render();
@@ -351,39 +377,7 @@ function updateClock() {
     let timeString = hours + ':' + minutes; // строка времени в формате "чч:мм"
     document.getElementById('trello__title-clock').textContent = timeString; // обновляем содержимое элемента с id="clock"
   }
-  updateClock(); // вызываем функцию updateClock() в первый раз, чтобы отобразить текущее время
-  // обновляем время каждую минуту
-  setInterval(updateClock, 60000);
-
-
-//   GET USERS!!!!!!!!!!!!!!!!!!!!
-
-// async function getUsers() {
-//     const users = await fetch("https://jsonplaceholder.typicode.com/users").then(res => res.json());
-//     localStorage.setItem("users", JSON.stringify(users));
-//     console.log(users);
-// }
-// getUsers();
-
-// //  Получаем данные пользователей из локального хранилища
-//  const users = JSON.parse(localStorage.getItem("users"));
-// //  Получаем элементы HTML, с которыми будем работать
-//  const selectUserBtn = document.getElementById("modal-window__dropdownBtn");
-//  // Создаем элементы option для каждого пользователя
-// users.forEach(user => {
-//     const optionElement = document.createElement("option");
-//     optionElement.value = user.id;
-//     optionElement.text = user.name;
-//     selectUserBtn.appendChild(optionElement);
-//   });
-//   // Добавляем обработчик события на выбор пользователя в списке
-//   selectUserBtn.addEventListener("change", (event) => {
-//     const selectedUserId = event.target.value;
-//     const selectedUser = users.find(user => user.id === parseInt(selectedUserId));
-//     console.log(selectedUser);
-//   });
-
-
-  
-  init();
+updateClock();
+setInterval(updateClock, 60000);
+init();
   
