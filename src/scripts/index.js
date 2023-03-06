@@ -122,6 +122,16 @@ function reset() {
     activeTitle.innerText = todo.title;
     // activeUser.innerHTML = todo.user;
     activeUpperSection.append(activeEditBtn);
+    activeEditBtn.addEventListener("click", function () {
+        deleteTodoById(todo.id);
+        overlayWrap.classList.add("active");
+        const title = document.getElementById("modal-window__title");
+        title.value = todo.title;
+        const description = document.getElementById("modal-window__text");
+        description.value = todo.description;
+        const user = document.getElementById("modal-window__dropdownBtn");
+        user.value = todo.user;
+    });
     activeEditBtn.append("Edit");
     activeUpperSection.append(activeDelBtn);
     activeDelBtn.append("Delete");
