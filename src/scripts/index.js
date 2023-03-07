@@ -5,6 +5,7 @@ const statusTODO = "TODO";
 const statusInProgress = "InProgress"
 const statusDONE = "DONE";
 const overlayWrap = document.getElementById("overlay");
+
 const activeEditBtn = document.getElementById("trello__todo-active--editBtn");
 const addTodoBtn = document.getElementById("trello__todo-active--addTodoBtn");
 const modalCancelBtn = document.getElementById("modal-window__cancelBtn");
@@ -13,10 +14,25 @@ const modalTitleInput = document.getElementById("modal-window__title");
 const modaldescriptionInput = document.getElementById("modal-window__text");
 const deleteAllBtn = document.getElementById("trello__todo-done--deleteAllBtn");
 const selectUserBtn = document.getElementById("modal-window__dropdownBtn");
+const transferBtn = document.getElementById("trello__todo-active--transferBtn");
+
+const warningWrap = document.getElementById("overlayWarning");
+const warningCancelBtn = document.getElementById("modal-warning__cancelBtn");
+const warningConfirmBtn = document.getElementById("modal-warning__confirmBtn");
 
 function init() {
     loadUsers();
     render();
+    updateClock();
+    setInterval(updateClock, 60000);
+}
+
+function updateClock() {
+    let now = new Date(); // текущая дата и время
+    let hours = now.getHours().toString().padStart(2, '0'); // часы
+    let minutes = now.getMinutes().toString().padStart(2, '0'); // минуты
+    let timeString = hours + ':' + minutes; // строка времени в формате "чч:мм"
+    document.getElementById('trello__title-clock').textContent = timeString; // обновляем содержимое элемента с id="clock"
 }
 
  async function loadUsers() {
@@ -314,6 +330,16 @@ function deleteAll() {
 }
 
 deleteAllBtn.addEventListener("click", function () {
+    warningWrap.classList.add("active");
+});
+
+warningCancelBtn.addEventListener("click", function () {
+    warningWrap.classList.remove("active");
+});
+
+
+warningConfirmBtn.addEventListener("click", function () {
+    warningWrap.classList.remove("active");
     deleteAll();
     render();
 });
@@ -360,34 +386,4 @@ modalConfirmBtn.addEventListener("click", function () {
     }
 });
 
-
-// warning modal window:
-const transferBtn = document.getElementById("trello__todo-active--transferBtn");
-const warningOverlay = document.getElementById("overlayWarning");
-const warningCancelBtn = document.getElementById("modal-warning__cancelBtn");
-const warningConfirmBtn = document.getElementById("modal-warning__confirmBtn");
-
-
-warningCancelBtn.addEventListener("click", function () {
-    warningOverlay.classList.remove("show");
-})
-
-//временно:
-
-warningConfirmBtn.addEventListener("click", function () {
-    console.log("I agree to add 6 more cases");
-    warningOverlay.classList.remove("show");
-})
-
-// Clock
-function updateClock() {
-    let now = new Date(); // текущая дата и время
-    let hours = now.getHours().toString().padStart(2, '0'); // часы
-    let minutes = now.getMinutes().toString().padStart(2, '0'); // минуты
-    let timeString = hours + ':' + minutes; // строка времени в формате "чч:мм"
-    document.getElementById('trello__title-clock').textContent = timeString; // обновляем содержимое элемента с id="clock"
-  }
-updateClock();
-setInterval(updateClock, 60000);
 init();
-  
