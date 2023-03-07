@@ -4,6 +4,7 @@
 const statusTODO = "TODO";
 const statusInProgress = "InProgress"
 const statusDONE = "DONE";
+
 const overlayWrap = document.getElementById("overlay");
 
 const activeEditBtn = document.getElementById("trello__todo-active--editBtn");
@@ -19,6 +20,10 @@ const transferBtn = document.getElementById("trello__todo-active--transferBtn");
 const warningWrap = document.getElementById("overlayWarning");
 const warningCancelBtn = document.getElementById("modal-warning__cancelBtn");
 const warningConfirmBtn = document.getElementById("modal-warning__confirmBtn");
+
+const todosWarning = document.getElementById("todosWarning");
+const todosWarningCancelBtn = document.getElementById("todos-warning__cancelBtn");
+const todosWarningConfirmBtn = document.getElementById("todos-warning__confirmBtn");
 
 function init() {
     loadUsers();
@@ -53,7 +58,7 @@ function reset() {
     doneWrap.innerHTML = '';
 }
 
-  function render() {
+function render() {
     reset();
     updateUsersDropdown();
 
@@ -85,7 +90,7 @@ function reset() {
         drawDone(todo);
     });
     updateDoneCounter(done);
-  }
+}
 
   function updateUsersDropdown() {
     const users = getUsers(); 
@@ -96,6 +101,13 @@ function reset() {
         option.text = userName;
         selectUserBtn.appendChild(option);
     });
+  }
+
+  function getNumberOfInProgressTasks() {
+    const inProgress =  getTodos().filter(t => {
+        return t.status === statusInProgress;
+    });
+    return inProgress.length;
   }
 
   function updateTodoCounter(todos) {
@@ -114,7 +126,6 @@ function reset() {
     doneCounter.innerText = done.length;
   }
 
-
   function drawTodo(todo) {
     const todoWrap = document.getElementById("trello__todo-active--caseWrap");
     const activeTodoCase = createElementWithID("li", "trello__todo-active--case");
@@ -130,7 +141,6 @@ function reset() {
     const activeDownSection = createElementWithClassName("div", "trello__todo-active--downSection");
     const activeUser = createElementWithClassName("p", "trello__todo-active--user");
     const activeTime = createElementWithClassName("p", "trello__todo-active--time");
-
 
     todoWrap.append(activeTodoCase);
     activeTodoCase.append(activeUpperSection);
@@ -162,14 +172,11 @@ function reset() {
     activeMidSection.append(activeTransferBtn);
     activeTransferBtn.append(">");
     activeTransferBtn.addEventListener("click", function() {
-        const inProgressTodo = getTodoByID(todo.id);
-        if (!!inProgressTodo) {
-            inProgressTodo.status = statusInProgress;
-            deleteTodoById(todo.id);
-            const todos = getTodos();
-            todos.push(inProgressTodo);
-            updateTodos(todos);
-            render();
+        const numberOfInProgressTasks = getNumberOfInProgressTasks();
+        if (numberOfInProgressTasks >= 6) {
+            todosWarning.classList.add("active");
+        } else {
+            moveTaskToInProgress(todo.id);
         }
     });
     activeTodoCase.append(activeDownSection);
@@ -178,6 +185,16 @@ function reset() {
     activeDownSection.append(activeTime);
     activeTime.append("Time");
     activeTime.innerText = todo.date;
+  }
+
+  function moveTaskToInProgress(id) {
+    const inProgressTodo = getTodoByID(id);
+    inProgressTodo.status = statusInProgress;
+    deleteTodoById(id);
+    const todos = getTodos();
+    todos.push(inProgressTodo);
+    updateTodos(todos);
+    render();
   }
 
   function drawInProgress(todo) {
@@ -369,12 +386,11 @@ modalCancelBtn.addEventListener("click", function () {
     overlayWrap.classList.remove("active");
     clearInputFields();
 });
-// временно:
+
 modalConfirmBtn.addEventListener("click", function () {
     const title = modalTitleInput.value;
     const description = modaldescriptionInput.value;
     const user = selectUserBtn.value;
-
 
     if (!!description && !!title) {
         addTodo(title, description, user);
@@ -384,6 +400,15 @@ modalConfirmBtn.addEventListener("click", function () {
     } else {
         alert("Please, input the title and the description");
     }
+});
+
+todosWarningCancelBtn.addEventListener("click", function () {
+    todosWarning.classList.remove("active");
+});
+
+todosWarningConfirmBtn.addEventListener("click", function () {
+    todosWarning.classList.remove("active");
+    moveTaskToInProgress(id);
 });
 
 init();
