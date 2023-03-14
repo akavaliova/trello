@@ -3,6 +3,7 @@
 // Open and close modal window:
 const statusTODO = "TODO";
 const statusInProgress = "InProgress"
+const statusInTransit = "InTransit";
 const statusDONE = "DONE";
 
 const overlayWrap = document.getElementById("overlay");
@@ -174,6 +175,7 @@ function render() {
     activeTransferBtn.addEventListener("click", function() {
         const numberOfInProgressTasks = getNumberOfInProgressTasks();
         if (numberOfInProgressTasks >= 6) {
+            moveTaskToInTransit(todo.id);
             todosWarning.classList.add("active");
         } else {
             moveTaskToInProgress(todo.id);
@@ -185,6 +187,15 @@ function render() {
     activeDownSection.append(activeTime);
     activeTime.append("Time");
     activeTime.innerText = todo.date;
+  }
+
+  function moveTaskToInTransit(id) {
+    const InTransitTODO = getTodoByID(id);
+    InTransitTODO.status = statusInTransit;
+    deleteTodoById(id);
+    const todos = getTodos();
+    todos.push(InTransitTODO);
+    updateTodos(todos);
   }
 
   function moveTaskToInProgress(id) {
@@ -299,8 +310,6 @@ function render() {
     return idElement;
   }
 
-
-
 function addTodo(title, description, user) {
     const todos = getTodos();
   
@@ -404,11 +413,33 @@ modalConfirmBtn.addEventListener("click", function () {
 
 todosWarningCancelBtn.addEventListener("click", function () {
     todosWarning.classList.remove("active");
+    updateInTransit(statusTODO);
+    render();
 });
 
 todosWarningConfirmBtn.addEventListener("click", function () {
     todosWarning.classList.remove("active");
-    moveTaskToInProgress(id);
+    updateInTransit(statusInProgress);
+    render();
 });
+
+function updateInTransit(status) {
+    let all = getTodos();
+
+    let todoInProgressDone =  all.filter(t => {
+        return t.status !== statusInTransit;
+    });
+
+    let inTransit = all.filter(t => {
+        return t.status === statusInTransit;
+    });
+
+    inTransit.forEach(todo => { 
+        todo.status = status;
+    });
+
+    let updatedTasks = todoInProgressDone.concat(inTransit);
+    updateTodos(updatedTasks);
+}
 
 init();
